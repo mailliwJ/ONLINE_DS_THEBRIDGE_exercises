@@ -54,3 +54,4 @@ cd Documents/GitHub
 git clone https://github.com/albertoromv/DS_Online_Mayo24_Exercises.git
 `
 4. Hacer `git pull` para actualizar.
+# ONLINE_DS_THEBRIDGE_exercises
