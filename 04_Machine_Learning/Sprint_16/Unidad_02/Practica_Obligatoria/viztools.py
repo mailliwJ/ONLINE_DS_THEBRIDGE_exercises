@@ -129,14 +129,11 @@ def histobox2(df, feature, bins=25, kde=False, box_mean=True, hist_color=('silve
     hist_color = colors.to_rgba(hist_color[0], hist_color[1])
     box_color = colors.to_rgba(box_color[0], box_color[1])
     
-    # Create a new axis if none is provided
     if ax is None:
         fig, ax = plt.subplots(figsize=(7, 5))
 
-    # Plot histogram
     ax1 = sns.histplot(df, x=feature, bins=bins, color=hist_color, element=element, kde=kde, ax=ax)
     
-    # Twin axis for the boxplot
     ax2 = ax1.twinx()
     sns.boxplot(df, x=feature, 
                 ax=ax2,
@@ -160,12 +157,10 @@ def histobox2(df, feature, bins=25, kde=False, box_mean=True, hist_color=('silve
                             'zorder':2},
                 showmeans=box_mean)
 
-    # Set titles and labels
     ax1.set_title(f'{feature} Distribution')
     ax1.set_xlabel(feature)
     ax1.set_ylabel('Frequency')
 
-    # If ax is None (meaning this function created the plot), show the plot
     if ax is None:
         plt.tight_layout()
         plt.show()
@@ -325,7 +320,6 @@ def plot_boxplot(df, feature, box_color=('blue', 0.4), box_mean=True, show_mean=
     if ax is None:
         fig, ax = plt.subplots(figsize=(7, 5))
 
-    # Plot the boxplot (horizontal)
     box = sns.boxplot(df, x=feature,
                       ax=ax,
                       width=0.3,
@@ -352,15 +346,12 @@ def plot_boxplot(df, feature, box_color=('blue', 0.4), box_mean=True, show_mean=
         ax.axvline(x=mean, color='green', linestyle='--', linewidth=2, label=f'Mean {feature}: {mean:.2f}')
         ax.legend()
 
-    # Set title and labels
     ax.set_title(f'{feature} Boxplot with Mean Line')
     ax.set_xlabel(feature)
 
-    # Remove left spine and ticks
     ax.spines['left'].set_visible(False)
     ax.yaxis.set_ticks([])
 
-    # If ax is None, show the plot
     if ax is None:
         plt.tight_layout()
         plt.show()
@@ -431,15 +422,12 @@ def combined_plot(df, hist_features=[], hist_bins=25, kde=False, box_mean=True,
                   hist_color=('silver', 1), box_color=('blue', 0.4), hist_element='bars',
                   scatter_x='', scatter_y='', show_corr=True, scatter_s=20):
     
-    # Create a figure with 1 row and 2 columns
     fig, axes = plt.subplots(1, 2, figsize=(15, 6))
     
-    # Call histobox function on the first axis (axes[0])
     if hist_features:
         histobox(df, features=hist_features, bins=hist_bins, kde=kde, box_mean=box_mean, 
                  hist_color=hist_color, box_color=box_color, element=hist_element, axes=[axes[0]])
     
-    # Call dispersion function on the second axis (axes[1])
     if scatter_x and scatter_y:
         sns.scatterplot(data=df, x=scatter_x, y=scatter_y, s=scatter_s, ax=axes[1])
         axes[1].set_title(f'Dispersion Diagram of {scatter_x} against {scatter_y}')
