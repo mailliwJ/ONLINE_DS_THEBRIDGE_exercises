@@ -68,29 +68,24 @@ def boxplots(df, cat_col = '', num_col = '', show_mean=False, palette='plasma', 
 # -----------------------------------------------------------------------------------------------------------------------------------
 
 def grouped_histograms(df, cat_col, num_col, group_size=None, kde=False, element='step', palette='plasma', ax=None):
-    # Get unique categories
     unique_cats = df[cat_col].unique()
     num_cats = len(unique_cats)
     
-    # Set default group_size to the total number of categories if it's None
     if group_size is None:
         group_size = num_cats
 
-    # Generate colormap for better visualization
     cmap = cm.get_cmap(palette, num_cats)
 
-    # If no axis is provided, create a new figure
     if ax is None:
         plt.figure(figsize=(10, 6))
         ax = plt.gca()
 
-    # Plot histograms for each group of categories based on group_size
     for i in range(0, num_cats, group_size):
         subset_cats = unique_cats[i:i + group_size]
         subset_df = df[df[cat_col].isin(subset_cats)]
 
         for j, cat in enumerate(subset_cats):
-            color = cmap(i + j / num_cats)  # Consistent coloring across groups
+            color = cmap(i + j / num_cats) 
             sns.histplot(subset_df[subset_df[cat_col] == cat][num_col], 
                          kde=kde, element=element,
                          label=str(cat), 
